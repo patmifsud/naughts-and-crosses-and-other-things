@@ -1,14 +1,18 @@
 window.onload = function (e) {
+  
+  // Load dom
   gridDom = document.querySelector("grid");
   body = document.querySelector("body");
   wrapper = document.querySelector("#wrapper");
   settings = document.querySelector("settings");
-
   startButton = document.querySelector("#start");
 
-  formatRulesPage();
+  //🧹
   refreshBoard();
+  formatRulesPage();
 
+
+  //connect up startbutton
   startButton.addEventListener("click", function(){
     startGame();
   }, false);
@@ -17,18 +21,71 @@ window.onload = function (e) {
 
 
 
-
-
+//🎬
 const startGame = function(){
   refreshBoard();
-  wrapper.className = "showGrid";
+  panCamera('showGrid');
   state = "play";
 };
 
+const panCamera = function(dest){
+  //leave arg blank to pan back to menu/ rules
+  wrapper.className = dest;
+}
 
-// ------------------------------------------------
-  // 🔨 Actions
-  // players[turn % players.length];
+
+const drawGame = function(){
+  console.log("draw game");
+  panCamera(' ');
+}
+
+const win = function(matches){
+  console.log( currentPlayer.named + " won!");
+  matches.forEach(match => {
+    let box = gridObj[match[0]][match[1]];
+    box.node.classList.add('winningBox')
+  
+  });
+  panCamera(' ');
+}
+
+
+
+
+//🧹
+const refreshBoard = function(){
+  //set boardSize to an int based on value in rules
+  boardSize = parseInt(rules.size.value.charAt(0)); 
+  createGrid();
+  createPlayers();
+  turn = 0;
+  maxTurns = boardSize * boardSize;
+}
+
+
+// players
+const createPlayers = function(){
+  players = [];
+  for (let i = 0; i < rules.players.value; i++) { 
+    player = playerFactory(`Player ${i+1}`, tokens[i], i);
+    players.push(thisPlayer)};
+  currentPlayer = players[0];
+  updateUiPlayerTokens();
+}
+
+const playerFactory = function(named, token, num){
+  return thisPlayer = {
+    named: named,
+    token: token,
+    num: num
+  }
+}
+
+const updateUiPlayerTokens = function(){
+  body.id = `hover${currentPlayer.token}`;
+}
+
+
 
 
 const boxClicked = function(boxObj){
@@ -37,7 +94,6 @@ const boxClicked = function(boxObj){
   if (!state === "play") return 
   else {
     if (boxObj.owned === ''){
-      console.log(currentPlayer.num)
       boxObj.owned = currentPlayer.num;
       boxObj.node.classList.add(currentPlayer.token);
       checkVictory(boxObj); //this should be updated to return t/f
@@ -51,66 +107,55 @@ const boxClicked = function(boxObj){
   }
 }
 
-const drawGame = function(){
-  console.log("draw game");
-  wrapper.className = (" ");
-}
 
-const refreshBoard = function(){
-  boardSize = parseInt(rules.size.value.charAt(0)); //set board size as int based on rules
-  createGrid();
-  createPlayers();
-  turn = 0;
-  console.log(boardSize);
-  maxTurns = boardSize * boardSize;
-}
-
-const createPlayers = function(){
-  players = [];
-  for (let i = 0; i < rules.players.value; i++) { 
-    let thisPlayer = {
-      named: `Player ${i+1}`,
-      token: tokens[i],
-      num: i};
-    players.push(thisPlayer)};
-  currentPlayer = players[0];
-  body.id = `hover${currentPlayer.token}`;
-}
+//--------------------------------------------------
+// Check for matches/ win
 
 const checkVictory = function(obj){
-  directions8.forEach(dir => 
-    probeMatches(obj.posY, obj.posX, dir[0], dir[1]));
+  for (let i = 0; i < directions8.length; i++){
+    const dir = directions8[i];
+    if (probeMatches(obj.posY, obj.posX, dir[0], dir[1])){
+      return true;
+    }
+  }
 }
 
 const probeMatches = function(y1, x1, ydir, xdir){
   let y = y1;
   let x = x1;
+  let cache = [ ];
   // check for X matches in one direction
   for(let m = 1; m < rules.toWin.value+1; m++ ){
-    if (m >= rules.toWin.value){
-      win();
-      return};   
-    y = moveOnAxis(y, ydir, 1);
-    x = moveOnAxis(x, xdir, 1);
-    if (!isBoxInsideBoard(y, x)) break;
-    if (!isBoxAMatch(gridObj[y][x])) break;
+    cache.push([y,x]);
+    if (m >= rules.toWin.value) {
+      win(cache); 
+      return true;
+    } else{
+      y = moveOnAxis(y, ydir, 1);
+      x = moveOnAxis(x, xdir, 1);
+      if (!isBoxInsideBoard(y, x)) break;
+      if (!isBoxAMatch(gridObj[y][x])) break;
+    }
   }
   // once a non-match is found or we hit edge of board,
-  // check back in opposite direction from end point  
+  // check back in opposite direction from end point
+  cache = [ ]; 
   for(let m = 0; m < rules.toWin.value+1; m++ ){
+    if (m > 0) cache.push([y,x]); //skip first cache, starting square isn't match
     if (m >= rules.toWin.value){
-      win();
-      return}; 
-    y = moveOnAxis(y, ydir, -1);
-    x = moveOnAxis(x, xdir, -1);
-    if (!isBoxInsideBoard(y, x)) break;
-    if (!isBoxAMatch(gridObj[y][x])) break;
+     win(cache);
+     return true;
+    } else {
+      y = moveOnAxis(y, ydir, -1);
+      x = moveOnAxis(x, xdir, -1);
+      if (!isBoxInsideBoard(y, x)) break;
+      if (!isBoxAMatch(gridObj[y][x])) break;
+    }
   }
 };
 
-
-//a = either x or y
 const moveOnAxis = function(a, adir, direction){
+  //a = either x or y
   if (direction == 1) return a + adir 
   else return a - adir; 
 }
@@ -128,22 +173,22 @@ const isBoxAMatch = function(obj){
   else return false
 }
 
-const win = function(){
-  console.log( currentPlayer.named + " won!");
-  wrapper.className = " ";
-}
 
+
+//--------------------------------------------------
+// Rules screen
 const formatRulesPage = function(){
   for (const rule in rules) {
     const thisRule = rules[rule];
     const heading = makeNode('h2', ``, `${thisRule.title}`);
     const container = makeNode('div', `#${rule} .setting`, ' ' );
-    container.append(heading);
-    container.append(makeRuleForm(thisRule, rule));
+    container.append(heading, makeRuleForm(thisRule, rule));
     settings.append(container);
   }
   selectDefaultRules();
+  updateDisabledRules();
 }
+
 
 const makeRuleForm = function(thisRule, name){
   const div = makeNode('div', `.options`, ` `);
@@ -159,9 +204,11 @@ const makeRuleForm = function(thisRule, name){
   return div;
 }
 
+
 const changeRule = function(rule, newValue){
   rules[rule].value = newValue;
   refreshBoard();
+  updateDisabledRules();
 }
 
 
@@ -171,6 +218,34 @@ const selectDefaultRules = function(){
     const radioId = `${rule}${thisRule.value}`
     document.getElementById(radioId).checked = true;
   }
+}
+
+
+const updateDisabledRules = function(){
+  //Reset disabled rules
+  const radios = document.querySelectorAll('input');
+  for(radio of radios){ radio.classList.remove('disabled')} 
+  //Disable new rules based on board size
+  if (boardSize < 6){
+    disableRule("players", 4);
+    disableRule("toWin", 5);
+    if (boardSize < 5){
+      disableRule("players", 3);
+      disableRule("toWin", 4);
+    }
+  }
+};
+
+
+const disableRule = function(rule, value){
+  const radioEl = document.getElementById(`${rule}${value}`);
+  if (radioEl.checked == true){
+    const defaultStr= rules[rule].default
+    const defaultRuleId = `${rule}${defaultStr}`
+    radioEl.checked = false;
+    document.getElementById(defaultRuleId).checked = true;
+  }; 
+  radioEl.className = 'disabled';
 }
 
 

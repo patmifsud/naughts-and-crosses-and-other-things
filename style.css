@@ -6,12 +6,11 @@
     --light3: #E9E2DD;
     --meidumGrey:#acabab;
  
-
-    --spacingLarge2: calc(2.5vw + 2.5vh + 8px);
-    --spacingLarge: calc(2vw + 2vh + 4px);
-    --spacingMed: calc(1vw + 1vh + 4px);
-    --spacingSmall: calc(0.75vw + 0.75vw + 3px);
-    --spacingSmall2: calc(0.5vw + 0.5vh + 2px);
+    --spacingLarge2: calc(2vw + 3vh + 6px);
+    --spacingLarge: calc(0.9vw + 2.5vh + 6px);
+    --spacingMed: calc(0.5vw + 2vh + 4px);
+    --spacingSmall: calc(0.45vw + 0.8vw + 2px);
+    --spacingSmall2: calc(0.35vw + 0.7vh + 2px);
 
 
 }
@@ -23,16 +22,14 @@
     box-sizing: border-box;
     font-family: 'Gothic A1', helvetica, sans-serif;
     color:var(--light2);
+    font-size:var(--spacingSmall);
     font-weight:400;
     line-height: 1.1;
     -webkit-tap-highlight-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-/* *:before,
-*:after {
-  box-sizing: border-box;
-} */
+
 
 body{
     background-color:var(--darkGrey);
@@ -43,11 +40,13 @@ body{
 
 h1{
     font-size: var(--spacingLarge);
-    margin-bottom: var(--spacingLarge);
 }
 h2{
     font-size: var(--spacingSmall);
+    margin-bottom:var(--spacingSmall2);
 }
+
+
 input[type=radio]{
     visibility: hidden;
     width: 1px;
@@ -56,25 +55,30 @@ input[type=radio]{
 label{
     padding: 5% 5.8% 4.8% 5.8%;
     margin: 8px 5px 0 0;
-    opacity: 0.7;
-    display: inline-block;
     border: 1px solid;
     border-color: var(--darkGrey);
+    display: inline-block;
     border-radius: 4px;
     color:var(--meidumGrey);
     cursor: pointer;
     transition: border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-
 }
 
 label:hover{
     border-color: var(--darkerGrey) ;
 }
 
-label.disabled{
+
+input[type=radio].disabled + label{
     color:var(--darkerGrey);
     border-color: var(--darkGrey)!important;
     cursor: auto;
+    pointer-events:none;
+}
+
+input[type=radio].disabled + label:hover{
+    border-color: var(--darkGrey);
+    color:var(--darkerGrey);
 }
 
 input[type=radio]:checked + label{
@@ -91,8 +95,7 @@ button#start{
     padding: 14px 60px 13px 60px;
     color: var(--darkGrey);
     cursor: pointer;
-    font-size: 13pt;
-    font-weight: 800;
+    width: fit-content;
     margin-top: var(--spacingSmall);
     background: #3BB5B5;
     margin-top: calc(5vw + 10px);
@@ -101,12 +104,12 @@ button#start{
     border-radius: 4px;
 }
 
-button.start:hover{
+button#start:hover{
     background: #38afaf;
     box-shadow: 0px 1px 0px #4a9595, inset 0px 1px 0px #42f1f1;
     color: var(--darkerGrey);
 }
-button.start:active{
+button#start:active{
     background: #2d9b9b;
     box-shadow: 0px 0px 0px #4a9595, inset 0px 2px 0px #269090;
     color: var(--darkerGrey);
@@ -114,8 +117,6 @@ button.start:active{
 
 
 #wrapper{
-    margin:5vh 0;
-    height: 90vh;
     display: flex;
     align-items: center;
     right: 70vw;
@@ -139,17 +140,11 @@ section{
 }
 
 grid{
+    max-height:85vh;
     margin-left:10vw;
     height: 55vw;
     width: 55vw;
     flex-direction: column;
-    flex-shrink: 0;
-
-}
-
-menu{
-    margin-left:10vw;
-    width:70vw;
     flex-shrink: 0;
 
 }
@@ -180,12 +175,24 @@ token{
     background-repeat: no-repeat;
 }
 
+menu{
+    margin-left: 10vw;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: scroll;
+    padding: 10vh 0;
+    flex-shrink: 0;
+    justify-content: safe center
+
+}
+
 settings{
     display: flex;
     flex-direction: row;
-    max-width: 65vw;
     flex-wrap: wrap;
-    gap: 3.5vw 5vw;
+    gap: var(--spacingLarge) var(--spacingSmall);
 }
 
 div.setting{
@@ -193,6 +200,7 @@ div.setting{
     min-width: 230px;
     margin-bottom: 5px;
 }
+
 
 .x token{
     background-image: url('assets/x.png')!important;}
@@ -226,3 +234,13 @@ div.setting{
     background-image: url('assets/placetriangle.png');}
 #hoversquare token:hover{
     background-image: url('assets/placesquare.png');}
+
+/* Indicate tokens that formed a win condition*/
+box.winningBox.x  token, box.winningBox.x  token:hover{
+    background-image: url('assets/winx.png')!important;}
+box.winningBox.o  token, box.winningBox.o  token:hover{
+    background-image: url('assets/wino.png')!important;}
+box.winningBox.triangle  token, box.winningBox.triangle  token:hover{
+    background-image: url('assets/wintriangle.png')!important;}
+box.winningBox.square  token, box.winningBox.square  token:hover{
+    background-image: url('assets/winsquare.png')!important;}

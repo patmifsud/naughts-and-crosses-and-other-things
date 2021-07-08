@@ -2,18 +2,21 @@
 let rules = {
   size:{
     value: "4x4",
+    default: "4x4",
     options:["3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9"],
     title: "Board Size",
     desc: "How many squares do you want your board to have?"
   },
   players:{
     value: 2,
+    default: 2,
     options:[1, 2, 3, 4],
-    title: "Players",
+    title: "Humans",
     desc: "How many (human) players do you want your game to have?"
   }, 
   toWin:{
     value: 3,
+    default: 3,
     options:[3, 4, 5],
     title: "Number needed to win",
     desc: "How many peices do you need to line up to win the match?"
