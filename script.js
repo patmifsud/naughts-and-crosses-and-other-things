@@ -19,6 +19,7 @@ window.onload = function (e) {
     startGame();
   }, false);
   endButton.addEventListener("click", function(){
+    formatRulesPage();
     gameState = 0;
     panCamera('');
   }, false);
@@ -153,7 +154,7 @@ const probeMatches = function(y1, x1, ydir, xdir){
 
 const moveOnAxis = function(a, adir, direction){
   //a = either x or y
-  if (direction == 1) return a + adir 
+  if (direction == 1) return a + adir;
   return a - adir; 
 }
 

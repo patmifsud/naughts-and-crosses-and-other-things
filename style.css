@@ -194,7 +194,6 @@ menu{
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow: scroll;
     padding: 10vh 0;
     flex-shrink: 0;
     justify-content: safe center;
@@ -341,7 +340,6 @@ span.turnPannel{
     menu{
         width: 100vw;
         height: 100vh;
-        overflow-y: scroll;
         margin-left:0;
         align-content: center;
         align-items: center;
@@ -361,16 +359,18 @@ span.turnPannel{
 
     div.options{
         display: flex;
-        overflow: scroll;
+        overflow-y: scroll;
         width: fit-content;
         flex-direction: row;
         margin: 0 auto var(--spacingSmall) auto;
         width: 100vw;
         flex-wrap: nowrap;
         justify-content: center;
+        padding-bottom: 1px;
+
     }
 
-    .options:nth-child(1) {
+    #size .options input:nth-child(1) {
         margin-left: 100px;
     }
 
