@@ -8,8 +8,8 @@ window.onload = function (e) {
   startButton = document.querySelector("#start");
   endButton = document.querySelector("#end");
   info = document.querySelector("section");
-  turnWinDisplay = document.querySelector("#turnWinInfo");
-  turnTokens = document.querySelector("#turnTokens");
+  const turnWinDisplay = document.querySelector("#turnWinInfo");
+  const turnTokens = document.querySelector("#turnTokens");
   //🧹
   refreshBoard();
   formatRulesPage();
@@ -238,8 +238,7 @@ const updateDisabledRules = function(){
     if (boardSize < 5){
       disableRule("players", 3);
       disableRule("toWin", 4);
-    }
-  }
+    }}
 };
 
 

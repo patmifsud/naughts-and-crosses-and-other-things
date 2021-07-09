@@ -28,7 +28,6 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-
 body{
     background-color:var(--darkGrey);
     width: 100vw;
@@ -356,7 +355,7 @@ span.turnPannel{
         margin-bottom:var(--spacingSmall2);
     }
     div.setting{
-     width: 100%;
+        width: 100%;
     }
 
     div.options{
