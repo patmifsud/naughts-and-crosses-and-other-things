@@ -197,6 +197,7 @@ menu{
     padding: 10vh 0;
     flex-shrink: 0;
     justify-content: safe center;
+    overflow-y: scroll;
     opacity:1; 
     transition: opacity 1.5s cubic-bezier(0.65, 0, 0.35, 1);
 }

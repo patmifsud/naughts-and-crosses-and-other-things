@@ -64,3 +64,26 @@ let currentPlayer = ''
 
 const directions8 = [[-1, 0],[-1,1],[0,1],[1,1],[1,0],[1,-1],[0,-1],[-1,-1]]; 
 
+
+
+// sounds.soundName.play();
+
+const sounds = {
+}
+
+const soundRef = [
+  'start', 
+  'win', 
+  'draw', 
+  'back', 
+  'button', 
+  'draw', 
+  'x', 
+  'o', 
+  'triangle', 
+  'circle'
+];
+
+soundRef.forEach((name) => {
+  sounds[name] = new Audio(`assets/sound${name}.wav`);
+} )

@@ -10,6 +10,7 @@ window.onload = function (e) {
   info = document.querySelector("section");
   turnWinDisplay = document.querySelector("#turnWinInfo");
   turnTokens = document.querySelector("#turnTokens");
+  underRug = document.querySelector(".underRug");
   //🧹
   refreshBoard();
   formatRulesPage();
@@ -17,12 +18,19 @@ window.onload = function (e) {
   //connect up buttons
   startButton.addEventListener("click", function(){
     startGame();
+    sounds.start.play();
   }, false);
   endButton.addEventListener("click", function(){
-    formatRulesPage();
+    sounds.back.play();
+    updateDisabledRules();
     gameState = 0;
     panCamera('');
   }, false);
+
+  // preload sounds
+  soundRef.forEach((name) => {
+    sounds[name] = new Audio(`assets/sound${name}.wav`);
+  } )
 };
 
 
@@ -41,6 +49,7 @@ const panCamera = function(dest){
 }
 
 const drawGame = function(){
+  sounds.draw.play();
   gameState = 0;
   endButton.className = 'gameEnd';
 }
