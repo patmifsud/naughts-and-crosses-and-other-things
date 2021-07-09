@@ -43,7 +43,6 @@ const panCamera = function(dest){
 const drawGame = function(){
   gameState = 0;
   endButton.className = 'gameEnd';
-
 }
 
 const win = function(matches){
@@ -126,7 +125,6 @@ const checkVictory = function(obj){
     }
   }
 }
-
 
 const probeMatches = function(y1, x1, ydir, xdir){
   let y = y1;
@@ -248,8 +246,9 @@ const updateDisabledRules = function(){
 const disableRule = function(rule, value){
   const radioEl = document.getElementById(`${rule}${value}`);
   if (radioEl.checked == true){
-    const defaultStr = rules[rule].default
-    const defaultRuleId = `${rule}${defaultStr}`
+    const defaultOptionStr = rules[rule].default;
+    const defaultRuleId = `${rule}${defaultOptionStr}`
+    rules[rule].value = defaultOptionStr;
     radioEl.checked = false;
     document.getElementById(defaultRuleId).checked = true;
   }; 
