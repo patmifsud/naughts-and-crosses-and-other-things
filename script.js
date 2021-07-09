@@ -6,17 +6,23 @@ window.onload = function (e) {
   wrapper = document.querySelector("#wrapper");
   settings = document.querySelector("settings");
   startButton = document.querySelector("#start");
-
+  endButton = document.querySelector("#end");
+  info = document.querySelector("section");
+  turnWinDisplay = document.querySelector("#turnWinInfo");
+  turnTokens = document.querySelector("#turnTokens");
   //🧹
   refreshBoard();
   formatRulesPage();
 
 
-  //connect up startbutton
+  //connect up buttons
   startButton.addEventListener("click", function(){
     startGame();
   }, false);
-
+  endButton.addEventListener("click", function(){
+    gameState = 0;
+    panCamera('');
+  }, false);
 };
 
 
@@ -25,7 +31,8 @@ window.onload = function (e) {
 const startGame = function(){
   refreshBoard();
   panCamera('showGrid');
-  state = "play";
+  gameState = 1;
+  endButton.className = '';
 };
 
 const panCamera = function(dest){
@@ -33,20 +40,19 @@ const panCamera = function(dest){
   wrapper.className = dest;
 }
 
-
 const drawGame = function(){
-  console.log("draw game");
-  panCamera(' ');
+  gameState = 0;
+  endButton.className = 'gameEnd';
+
 }
 
 const win = function(matches){
-  console.log( currentPlayer.named + " won!");
+  gameState = 0;
   matches.forEach(match => {
     let box = gridObj[match[0]][match[1]];
     box.node.classList.add('winningBox')
-  
   });
-  panCamera(' ');
+  endButton.className = 'gameEnd';
 }
 
 
@@ -60,6 +66,7 @@ const refreshBoard = function(){
   createPlayers();
   turn = 0;
   maxTurns = boardSize * boardSize;
+  buildInfoPannel();
 }
 
 
@@ -90,8 +97,7 @@ const updateUiPlayerTokens = function(){
 
 const boxClicked = function(boxObj){
   //stage of game play? 
-  console.log("ℹ️ Clicked on box " + boxObj.posY + boxObj.posX )
-  if (!state === "play") return 
+  if (!gameState) return 
   else {
     if (boxObj.owned === ''){
       boxObj.owned = currentPlayer.num;
@@ -102,6 +108,7 @@ const boxClicked = function(boxObj){
         turn++
         currentPlayer = players[turn % players.length];
         body.id = `hover${currentPlayer.token}`;
+        updateTurnWinDisplay();
       } 
     } 
   }
@@ -119,6 +126,7 @@ const checkVictory = function(obj){
     }
   }
 }
+
 
 const probeMatches = function(y1, x1, ydir, xdir){
   let y = y1;
@@ -285,7 +293,32 @@ const createBoxes = function (row, rowDom) {
 }
 
 
+// -----
+// funcitons to make info pannel html
 
+const buildInfoPannel = function(){
+  updateTurnWinDisplay();
+  buildTurnTokens();
+
+}
+
+const updateTurnWinDisplay = function(){
+  const turnSpan = makeNode("span", '.turnPannel', `Turn ${turn} `);
+  const winSpan = makeNode("span", '.win', `${rules.toWin.value} to win`);
+  turnWinDisplay.innerHTML = '';
+  turnWinDisplay.append(turnSpan, winSpan);
+}
+
+const buildTurnTokens = function(){
+  turnTokens.innerHTML = '';
+
+  players.forEach((player) => { 
+    console.log(makeNode("div", `.turn .${player.token}`, ``))
+    const tokenImg = makeNode("div", `.turn .${player.token}`, ``);
+    turnTokens.append(tokenImg);
+  } );
+
+}
 
 
 // ------------------------------------------------

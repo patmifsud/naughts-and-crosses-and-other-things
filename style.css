@@ -11,8 +11,6 @@
     --spacingMed: calc(0.5vw + 2vh + 4px);
     --spacingSmall: calc(0.45vw + 0.8vw + 2px);
     --spacingSmall2: calc(0.35vw + 0.7vh + 2px);
-
-
 }
 
 *{
@@ -91,17 +89,36 @@ input[type=radio]:checked + label{
     margin-bottom: var(--spacingLarge2);
 }
 
-button#start{
+button{
     padding: 14px 60px 13px 60px;
-    color: var(--darkGrey);
     cursor: pointer;
     width: fit-content;
     margin-top: var(--spacingSmall);
-    background: #3BB5B5;
     margin-top: calc(5vw + 10px);
+    background:none;
+    border-radius: 4px;
+    color: var(--meidumGrey);
+    border: 1px solid rgba(255, 255, 255, 0.082);
+}
+
+button#end:hover{
+    color: white;
+    box-shadow: 0px 1px 0px rgba(214, 76, 76, 0.25), 0px 1px 0px #D64C4C, inset 0px 1px 0px #FF8A8A;
+    background: #DB5F5F;
+    border: 1px solid #D64C4C;
+}
+button#end:active, button#end.gameEnd{
+    color: #dbcbcb;
+    box-shadow: 0px 0px 0px rgba(214, 76, 76, 0.25), 0px 2px 0px #D64C4C;
+    background: #b85555;
+    border: 1px solid #c54949;
+}
+
+button#start{
+    color: var(--darkGrey);
+    background: #3BB5B5;
     border: 1px solid #4a9595;
     box-shadow: 0px 1px 0px #4a9595, inset 0px 1px 0px #30d1d1;
-    border-radius: 4px;
 }
 
 button#start:hover{
@@ -134,10 +151,20 @@ grid, box, row{
 } 
 
 section{
-    width:25vw;
-    padding-left:10vw;
+    display: flex;
+    height: 65vh;
+    width: 25vw;
+    padding-left: 10vw;
     flex-shrink: 0;
+    flex-direction: column;
+    align-items: flex-end;
+    align-content: flex-end;
+    justify-content: space-between;
+    text-align:right;
 }
+
+
+section div{width:100%;}
 
 grid{
     max-height:85vh;
@@ -146,7 +173,6 @@ grid{
     width: 55vw;
     flex-direction: column;
     flex-shrink: 0;
-
 }
 
 box{
@@ -163,9 +189,6 @@ box{
         background: var(--light2);   
     } 
 
-
-row{
-}
 
 token{
     width:100%;
@@ -184,8 +207,14 @@ menu{
     overflow: scroll;
     padding: 10vh 0;
     flex-shrink: 0;
-    justify-content: safe center
+    justify-content: safe center;
+    opacity:1; 
+    transition: opacity 2s cubic-bezier(0.65, 0, 0.35, 1);
+}
 
+
+.showGrid menu{
+    opacity:0; 
 }
 
 settings{
@@ -244,3 +273,127 @@ box.winningBox.triangle  token, box.winningBox.triangle  token:hover{
     background-image: url('assets/wintriangle.png')!important;}
 box.winningBox.square  token, box.winningBox.square  token:hover{
     background-image: url('assets/winsquare.png')!important;}
+
+
+/* turn indicator*/
+
+
+#turntokens{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: var(--spacingLarge2);
+
+}
+
+.turn{
+    width: 100%;
+    height: 10vh;
+    max-width: 70px;
+    max-height: 70px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.2;
+    flex-shrink: 1;
+    transition: opacity 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+
+span{ color: var(--meidumGrey);}
+span.turnPannel{
+    margin-right: var(--spacingSmall);
+    opacity: 0.8;
+}
+
+.turn.x{
+    background-image: url('assets/outlinex.png');}
+.turn.o{
+    background-image: url('assets/outlineo.png');}
+.turn.triangle{
+    background-image: url('assets/outlinetriangle.png');}
+.turn.square{
+    background-image: url('assets/outlinesquare.png');}
+
+#hoverx .turn.x, #hovero .turn.o, #hovertriangle .turn.triangle, #hoversquare .turn.square{
+    opacity: 1;
+}
+
+
+@media screen and (orientation:portrait) {
+    *{
+        text-align: center;
+    }
+
+    #wrapper{
+        display: flex;
+        flex-direction: column;
+        flex-direction: column-reverse;
+        right: 0;
+        top:0;
+        transition: top 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    section{
+        height: auto;
+        width: 100%;
+        align-items: center;
+        padding-left:0;
+    }
+    grid{
+        margin-left:0;
+        height: 80vw;
+        width: 80vw;
+    }
+
+    #wrapper.showGrid{
+        right: 0;
+        top: -90vh;    
+    }
+
+    menu{
+        width: 80vw;
+        padding:0;
+        margin-left:0;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    settings{
+        gap: 30pt 0;
+        margin-bottom:10pt;
+    }
+    div.setting{
+        width:100%;
+    }
+
+
+    #turnTokens{
+        padding:20pt 0;
+        justify-content: center;
+        gap:10pt;
+    }
+    .turn{
+         max-width: 40pt;
+    }
+    
+
+
+    :root{
+        --darkGrey:#333333;
+        --darkerGrey:#1C1C1C;
+        --light1: #FFFAF5;
+        --light2: #EFE8E2;
+        --light3: #E9E2DD;
+        --meidumGrey:#acabab;
+     
+        --spacingLarge2: 26pt;
+        --spacingLarge: 20pt;
+        --spacingMed: 15pt;
+        --spacingSmall: 11pt;
+        --spacingSmall2: 7pt;
+    }
+
+}

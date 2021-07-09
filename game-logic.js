@@ -1,8 +1,8 @@
 
 let rules = {
   size:{
-    value: "4x4",
-    default: "4x4",
+    value: "5x5",
+    default: "5x5",
     options:["3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9"],
     title: "Board Size",
     desc: "How many squares do you want your board to have?"
@@ -57,7 +57,7 @@ let maxTurns = 0;
 let players = [];
 let tokens = ["x", "o", "triangle", "square"];
 
-let state = "play";
+let gameState = 0;
 let turn = 0;
 
 let currentPlayer = ''
