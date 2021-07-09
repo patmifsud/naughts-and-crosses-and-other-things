@@ -210,6 +210,7 @@ settings{
     flex-direction: row;
     flex-wrap: wrap;
     gap: var(--spacingLarge) var(--spacingSmall);
+    margin-bottom:var(--spacingMed);
 }
 div.setting{
     width: 30vw;
@@ -262,7 +263,6 @@ box.winningBox.square  token, box.winningBox.square  token:hover{
 
 
 /* turn indicator*/
-
 
 #turntokens{
     display: flex;
@@ -341,8 +341,7 @@ span.turnPannel{
     menu{
         width: 100vw;
         height: 100vh;
-        padding: 10vh 5vw;
-        overflow: scroll;
+        overflow-y: scroll;
         margin-left:0;
         align-content: center;
         align-items: center;
@@ -351,21 +350,28 @@ span.turnPannel{
 
 
     settings{
-        gap: var(--spacingSmall) 0;
-        margin-bottom:var(--spacingSmall2);
+        gap: var(--spacingMed) 0;
+        margin-bottom:var(--spacingMed);
     }
+
     div.setting{
         width: 100%;
     }
 
+
     div.options{
         display: flex;
         overflow: scroll;
-        margin-bottom: var(--spacingSmall);
-        width: 100vw;
+        width: fit-content;
         flex-direction: row;
+        margin: 0 auto var(--spacingSmall) auto;
+        width: 100vw;
         flex-wrap: nowrap;
         justify-content: center;
+    }
+
+    .options:nth-child(1) {
+        margin-left: 100px;
     }
 
     #turnTokens{

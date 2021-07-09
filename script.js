@@ -90,24 +90,19 @@ const updateUiPlayerTokens = function(){
   body.id = `hover${currentPlayer.token}`;
 }
 
-
-
-
 const boxClicked = function(boxObj){
   //stage of game play? 
-  if (!gameState) return 
-  else {
-    if (boxObj.owned === ''){
-      boxObj.owned = currentPlayer.num;
-      boxObj.node.classList.add(currentPlayer.token);
-      checkVictory(boxObj); //this should be updated to return t/f
-      if(turn === (maxTurns -1)) drawGame();
-      else{
-        turn++
-        currentPlayer = players[turn % players.length];
-        body.id = `hover${currentPlayer.token}`;
-        updateTurnWinDisplay();
-      } 
+  if (!gameState) return; 
+  if (boxObj.owned === ''){
+    boxObj.owned = currentPlayer.num;
+    boxObj.node.classList.add(currentPlayer.token);
+    checkVictory(boxObj); //this should be updated to return t/f
+    if(turn === (maxTurns -1)) drawGame();
+    else{
+      turn++
+      currentPlayer = players[turn % players.length];
+      body.id = `hover${currentPlayer.token}`;
+      updateTurnWinDisplay();
     } 
   }
 }
@@ -134,13 +129,11 @@ const probeMatches = function(y1, x1, ydir, xdir){
     cache.push([y,x]);
     if (m >= rules.toWin.value) {
       win(cache); 
-      return true;
-    } else{
+      return true;}
       y = moveOnAxis(y, ydir, 1);
       x = moveOnAxis(x, xdir, 1);
       if (!isBoxInsideBoard(y, x)) break;
       if (!isBoxAMatch(gridObj[y][x])) break;
-    }
   }
   // once a non-match is found or we hit edge of board,
   // check back in opposite direction from end point
@@ -149,33 +142,30 @@ const probeMatches = function(y1, x1, ydir, xdir){
     if (m > 0) cache.push([y,x]); //skip first cache, starting square isn't match
     if (m >= rules.toWin.value){
      win(cache);
-     return true;
-    } else {
-      y = moveOnAxis(y, ydir, -1);
-      x = moveOnAxis(x, xdir, -1);
-      if (!isBoxInsideBoard(y, x)) break;
-      if (!isBoxAMatch(gridObj[y][x])) break;
-    }
+     return true;}
+    y = moveOnAxis(y, ydir, -1);
+    x = moveOnAxis(x, xdir, -1);
+    if (!isBoxInsideBoard(y, x)) break;
+    if (!isBoxAMatch(gridObj[y][x])) break;
   }
-};
+}
+
 
 const moveOnAxis = function(a, adir, direction){
   //a = either x or y
   if (direction == 1) return a + adir 
-  else return a - adir; 
+  return a - adir; 
 }
 
 const isBoxInsideBoard = function(y, x){
   if (y > boardSize -1 || y < 0 || x > boardSize -1 || x < 0){
     return false
-  } else return true
+  } return true
 }
 
 const isBoxAMatch = function(obj){
   const player = currentPlayer;
-  const playerNum = player.num
-  if (obj.owned === playerNum) return true
-  else return false
+  return obj.owned === player.num 
 }
 
 
@@ -313,7 +303,6 @@ const buildTurnTokens = function(){
     const tokenImg = makeNode("div", `.turn .${player.token}`, ``);
     turnTokens.append(tokenImg);
   } );
-
 }
 
 
@@ -347,11 +336,11 @@ const makeElement = function (type, attributes) {
     } else if (attr.charAt(0) === ".") {
       const cl = attrObj.class;
       attrObj.class = cl ? cl + " " + attrValue : attrValue;
-    }else if (attr.charAt(0) === "^") {
+    } else if (attr.charAt(0) === "^") {
       attrObj.type = attrValue;
-    }else if (attr.charAt(0) === "$") {
+    } else if (attr.charAt(0) === "$") {
       attrObj.name = attrValue;
-    }else if (attr.charAt(0) === "4") {
+    } else if (attr.charAt(0) === "4") {
     attrObj.for = attrValue;
   }
   });
