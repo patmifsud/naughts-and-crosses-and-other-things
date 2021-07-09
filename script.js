@@ -8,12 +8,11 @@ window.onload = function (e) {
   startButton = document.querySelector("#start");
   endButton = document.querySelector("#end");
   info = document.querySelector("section");
-  const turnWinDisplay = document.querySelector("#turnWinInfo");
-  const turnTokens = document.querySelector("#turnTokens");
+  turnWinDisplay = document.querySelector("#turnWinInfo");
+  turnTokens = document.querySelector("#turnTokens");
   //🧹
   refreshBoard();
   formatRulesPage();
-
 
   //connect up buttons
   startButton.addEventListener("click", function(){
