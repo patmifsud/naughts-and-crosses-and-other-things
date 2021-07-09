@@ -150,6 +150,10 @@ grid, box, row{
     flex:1 1 auto;
 } 
 
+row{
+    height: 100%;
+}
+
 section{
     display: flex;
     height: 65vh;

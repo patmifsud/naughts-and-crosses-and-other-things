@@ -248,7 +248,7 @@ const updateDisabledRules = function(){
 const disableRule = function(rule, value){
   const radioEl = document.getElementById(`${rule}${value}`);
   if (radioEl.checked == true){
-    const defaultStr= rules[rule].default
+    const defaultStr = rules[rule].default
     const defaultRuleId = `${rule}${defaultStr}`
     radioEl.checked = false;
     document.getElementById(defaultRuleId).checked = true;
@@ -299,7 +299,6 @@ const createBoxes = function (row, rowDom) {
 const buildInfoPannel = function(){
   updateTurnWinDisplay();
   buildTurnTokens();
-
 }
 
 const updateTurnWinDisplay = function(){
