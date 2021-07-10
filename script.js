@@ -205,6 +205,7 @@ const makeRuleForm = function(thisRule, name){
     const radio = makeNode('input', `^radio $${name} #${id}`, ``);
     const radioLabel = makeNode('label', `4${id}`, `${option}`);
     radio.addEventListener("click", function(){
+      sounds.button.play();
       changeRule(name, option);}, false);
     div.append(radio, radioLabel);
   }
@@ -213,7 +214,6 @@ const makeRuleForm = function(thisRule, name){
 
 
 const changeRule = function(rule, newValue){
-  sounds.button.play();
   rules[rule].value = newValue;
   refreshBoard();
   updateDisabledRules();
