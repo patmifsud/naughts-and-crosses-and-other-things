@@ -31,6 +31,13 @@ window.onload = function (e) {
   soundRef.forEach((name) => {
     sounds[name] = new Audio(`assets/sound/${name}.wav`);
   } )
+
+  // preload images
+  preloadImages.forEach((name) => {
+    const img = makeNode('img', '.preload', '');
+    img.src = `assets/${name}`;
+    underRug.append(img);
+  } )
 };
 
 

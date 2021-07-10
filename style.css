@@ -218,6 +218,15 @@ div.setting{
     margin-bottom: var(--spacingSmaller);
 }
 
+
+.underRug{
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+
 .x token{
     background-image: url('assets/x.png')!important;}
 .o token{

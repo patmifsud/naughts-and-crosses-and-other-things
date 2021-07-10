@@ -84,3 +84,25 @@ const soundRef = [
   'square'
 ];
 
+const preloadImages = [
+  'hovo.png',
+  'hovsquare.png',
+  'hovtriangle.png',
+  'hovx.png',
+  'o.png',
+  'outlineo.png',
+  'outlinesquare.png',
+  'outlinetriangle.png',
+  'outlinex.png',
+  'placeo.png',
+  'placesquare.png',
+  'placetriangle.png',
+  'placex.png',
+  'square.png',
+  'triangle.png',
+  'wino.png',
+  'winsquare.png',
+  'wintriangle.png',
+  'winx.png',
+  'x.png',
+]
