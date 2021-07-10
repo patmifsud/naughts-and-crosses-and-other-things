@@ -81,9 +81,6 @@ const soundRef = [
   'x', 
   'o', 
   'triangle', 
-  'circle'
+  'square'
 ];
 
-soundRef.forEach((name) => {
-  sounds[name] = new Audio(`assets/sound${name}.wav`);
-} )

@@ -29,7 +29,7 @@ window.onload = function (e) {
 
   // preload sounds
   soundRef.forEach((name) => {
-    sounds[name] = new Audio(`assets/sound${name}.wav`);
+    sounds[name] = new Audio(`assets/sound/${name}.wav`);
   } )
 };
 
@@ -55,6 +55,7 @@ const drawGame = function(){
 }
 
 const win = function(matches){
+  sounds.win.play();
   gameState = 0;
   matches.forEach(match => {
     let box = gridObj[match[0]][match[1]];
@@ -104,6 +105,7 @@ const boxClicked = function(boxObj){
   //stage of game play? 
   if (!gameState) return; 
   if (boxObj.owned === ''){
+    sounds[currentPlayer.token].play();
     boxObj.owned = currentPlayer.num;
     boxObj.node.classList.add(currentPlayer.token);
     checkVictory(boxObj); //this should be updated to return t/f
@@ -211,6 +213,7 @@ const makeRuleForm = function(thisRule, name){
 
 
 const changeRule = function(rule, newValue){
+  sounds.button.play();
   rules[rule].value = newValue;
   refreshBoard();
   updateDisabledRules();
