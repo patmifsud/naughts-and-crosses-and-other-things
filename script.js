@@ -15,17 +15,6 @@ window.onload = function (e) {
   refreshBoard();
   formatRulesPage();
 
-  //connect up buttons
-  startButton.addEventListener("click", function(){
-    startGame();
-    sounds.start.play();
-  }, false);
-  endButton.addEventListener("click", function(){
-    sounds.back.play();
-    updateDisabledRules();
-    gameState = 0;
-    panCamera('');
-  }, false);
 
   // preload sounds
   soundRef.forEach((name) => {
@@ -38,6 +27,18 @@ window.onload = function (e) {
     img.src = `assets/${name}`;
     underRug.append(img);
   } )
+
+  //connect up buttons
+  startButton.addEventListener("click", function(){
+    startGame();
+    playSound('start');
+  }, false);
+  endButton.addEventListener("click", function(){
+    playSound('back');
+    updateDisabledRules();
+    gameState = 0;
+    panCamera('');
+  }, false);
 };
 
 
@@ -56,13 +57,13 @@ const panCamera = function(dest){
 }
 
 const drawGame = function(){
-  sounds.draw.play();
+  playSound('draw');
   gameState = 0;
   endButton.className = 'gameEnd';
 }
 
 const win = function(matches){
-  sounds.win.play();
+  playSound('win');
   gameState = 0;
   matches.forEach(match => {
     let box = gridObj[match[0]][match[1]];
@@ -112,7 +113,7 @@ const boxClicked = function(boxObj){
   //stage of game play? 
   if (!gameState) return; 
   if (boxObj.owned === ''){
-    sounds[currentPlayer.token].play();
+    playSound(currentPlayer.token);
     boxObj.owned = currentPlayer.num;
     boxObj.node.classList.add(currentPlayer.token);
     checkVictory(boxObj); //this should be updated to return t/f
@@ -212,7 +213,7 @@ const makeRuleForm = function(thisRule, name){
     const radio = makeNode('input', `^radio $${name} #${id}`, ``);
     const radioLabel = makeNode('label', `4${id}`, `${option}`);
     radio.addEventListener("click", function(){
-      sounds.button.play();
+      playSound('button');
       changeRule(name, option);}, false);
     div.append(radio, radioLabel);
   }
@@ -263,6 +264,12 @@ const disableRule = function(rule, value){
   radioEl.className = 'disabled';
 }
 
+
+
+const playSound = function(sound){
+  sounds[sound].currentTime = 0;
+  sounds[sound].play();
+}
 
 //listener to update player when a turn passes js?
 
