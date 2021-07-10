@@ -7,5 +7,4 @@ It works on mobile, too, but I haven't tested it too throughly yet.
 
 It's writen in javascript, html and css. 
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/) I guess?
+## [PLAY](https://patmifsud.github.io/naughts-and-crosses-and-other-things/) 
